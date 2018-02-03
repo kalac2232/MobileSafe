@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.a97210.mobilesafe.R;
 import com.example.a97210.mobilesafe.Utils.ConstantValue;
 import com.example.a97210.mobilesafe.Utils.SharePreferenceUtil;
+import com.example.a97210.mobilesafe.Utils.VersonUtil;
 import com.example.a97210.mobilesafe.View.SettingItemView;
 
 /**
@@ -23,6 +25,12 @@ public class SettingActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         mContext = this;
+        init();
+
+
+    }
+
+    private void init() {
         //找到控件
         final SettingItemView siv_updata = (SettingItemView) findViewById(R.id.siv_updata);
         //设置状态
@@ -32,6 +40,14 @@ public class SettingActivity extends Activity{
             public void onClick(View v) {
                 siv_updata.changeCheckBoxStatus();
                 SharePreferenceUtil.putBoolean(mContext,ConstantValue.AUTOUPDATASTATUS,siv_updata.isCheck());
+            }
+        });
+        Button bt_checkupdata = (Button) findViewById(R.id.bt_checkupdata);
+        bt_checkupdata.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VersonUtil versonUtil = new VersonUtil(mContext);
+                versonUtil.checkNewVerson();
             }
         });
     }

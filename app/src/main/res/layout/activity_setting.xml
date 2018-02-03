@@ -27,4 +27,9 @@
         mobilesafe:deson="开启"
         >
     </com.example.a97210.mobilesafe.View.SettingItemView>
+    <Button
+        android:id="@+id/bt_checkupdata"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="手动检测更新"/>
 </LinearLayout>
