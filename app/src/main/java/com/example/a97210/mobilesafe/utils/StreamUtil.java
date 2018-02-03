@@ -1,6 +1,5 @@
-package com.example.a97210.mobilesafe.utils;
+package com.example.a97210.mobilesafe.Utils;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;

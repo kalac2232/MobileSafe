@@ -16,11 +16,15 @@ import android.os.Message;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.view.animation.AlphaAnimation;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a97210.mobilesafe.R;
-import com.example.a97210.mobilesafe.utils.StreamUtil;
+import com.example.a97210.mobilesafe.Utils.ConstantValue;
+import com.example.a97210.mobilesafe.Utils.SharePreferenceUtil;
+import com.example.a97210.mobilesafe.Utils.StreamUtil;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
@@ -35,6 +39,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  *
@@ -84,7 +90,45 @@ public class SplashActivity extends Activity {
             }
         }
     };
+    private RelativeLayout splash;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //去除activity头部的一种方式
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activity_splash);
+        mContext = this;
+        initUI();
+        initAnimation();
+        //判断自动更新功能是否打开
+        if (SharePreferenceUtil.getBoolean(mContext, ConstantValue.AUTOUPDATASTATUS,false)) {
+            getNewVerson(mContext);
+        } else {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    enterHome();
+                }
+            }).start();
+
+        }
+
+
+    }
+
+    private void initAnimation() {
+        //创建动画对象
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+        //设置动画时长
+        alphaAnimation.setDuration(1000*2);
+        splash.startAnimation(alphaAnimation);
+    }
 
     /**
      *显示更新对话框
@@ -194,17 +238,7 @@ public class SplashActivity extends Activity {
     }
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //去除activity头部的一种方式
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_splash);
-        mContext = this;
-        initUI();
-        getNewVerson();
-
-    }
+   
     /**
      * 进入程序主界面
      */
@@ -223,7 +257,7 @@ public class SplashActivity extends Activity {
 
     }
 
-    private void getNewVerson() {
+    private void getNewVerson(Context context) {
         final int localVersionCode = getVersionCode();//本地版本号
         new Thread(){
             @Override
@@ -239,7 +273,7 @@ public class SplashActivity extends Activity {
                     //开启一个链接
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     //设置请求头
-                    connection.setConnectTimeout(1000*10);//设置请求超时时限
+                    connection.setConnectTimeout(1000*3);//设置请求超时时限
                     connection.setReadTimeout(1000);//设置读取超时时限
                     //如果请求方式为get方式，则不用写
 
@@ -278,10 +312,10 @@ public class SplashActivity extends Activity {
                 } finally {
                     //发送消息
                     long endTime = System.currentTimeMillis();
-                    //如果程序运行时间小于4秒 则补足4秒的导航页停留时间
-                    if ((endTime - startTime) < 4000) {
+                    //如果程序运行时间小于3秒 则补足3秒的导航页停留时间
+                    if ((endTime - startTime) < 3000) {
                         try {
-                            Thread.sleep(4000 - (endTime - startTime));
+                            Thread.sleep(3000 - (endTime - startTime));
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -336,5 +370,6 @@ public class SplashActivity extends Activity {
     private void initUI() {
         tv_verson_name = (TextView) findViewById(R.id.tv_verson_name);
         tv_verson_name.setText(getVersionName());
+        splash = (RelativeLayout) findViewById(R.id.activity_splash);
     }
 }
