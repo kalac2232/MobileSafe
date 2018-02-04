@@ -3,6 +3,8 @@
     package="com.example.a97210.mobilesafe">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,6 +20,12 @@
         </activity>
         <activity android:name=".Activity.HomeActivity"/>
         <activity android:name=".Activity.SettingActivity"/>
+        <activity android:name=".Activity.SetupOverActivity"/>
+        <activity android:name=".Activity.Setup1Activity"/>
+        <activity android:name=".Activity.Setup2Activity"/>
+        <activity android:name=".Activity.Setup3Activity"/>
+        <activity android:name=".Activity.Setup4Activity"/>
+        <activity android:name=".Activity.ContactListActivity"/>
     </application>
 
 </manifest>

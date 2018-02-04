@@ -1,6 +1,7 @@
 package com.example.a97210.mobilesafe.Utils;
 
 /**
+ *
  * Created by 97210 on 2018/2/3.
  */
 
@@ -12,4 +13,11 @@ public class ConstantValue {
     public static final int URL_ERROR = 102;
     public static final int IO_ERROR = 103;
     public static final int JSON_ERROR = 104;
+    public static final String MOBILE_SAFE_PSW = "PhonePassWord";
+    public static final String SIM_NUMBER = "sim_number";
+    public static final String SAFE_PHONENUMBER = "safe_phonenumber";
+    /**
+     * 防盗总开关
+     */
+    public static final String SECURITYSTATUS = "checkboxstatus";
 }
