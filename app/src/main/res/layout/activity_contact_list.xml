@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
     <TextView
         style="@style/TextTitle"
-        android:text="选择联系人"/>
+        android:text="@string/Choose_Contact"/>
     <ListView
         android:id="@+id/lv_contact"
         android:layout_width="wrap_content"

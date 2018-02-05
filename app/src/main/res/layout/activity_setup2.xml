@@ -5,7 +5,7 @@
     android:orientation="vertical" >
     <TextView
         style="@style/TextTitle"
-        android:text="2,手机卡绑定"/>
+        android:text="@string/_2_BindSIMNumber"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

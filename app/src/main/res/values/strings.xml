@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">MobileSafe</string>
+    <string name="sample_device_admin">设备管理器</string>
+    <string name="sample_device_admin_description">手机卫士相关</string>
+    <string name="Choose_Contact">选择联系人</string>
+    <string name="Feature_list">功能列表</string>
+    <string name="Set_AutoUpdata">自动更新设置</string>
+    <string name="AutoUpdata_Off">自动更新关闭</string>
+    <string name="AutoUpdata_On">自动更新开启</string>
+    <string name="Off">关闭</string>
+    <string name="On">开启</string>
+    <string name="Set_PhoneAddress">电话归属地设置</string>
+    <string name="_1_Welcome">1,欢迎使用手机防盗</string>
+    <string name="_2_BindSIMNumber">2,手机卡绑定</string>
+    <string name="SettingCenter">设置中心</string>
+    <string name="Manual_Check">手动检测更新</string>
+    <string name="Input_PhoneNumber">请输入电话号码</string>
+    <string name="_4_Set_Over">4,恭喜您,设置完成</string>
+    <string name="Verson_Name">版本名称</string>
+    <string name="Tools">工具</string>
+    <string name="Query">查询</string>
+    <string name="None">暂无数据</string>
+    <string name="Input_PassWord">输入密码</string>
+    <string name="Submit">确认</string>
+    <string name="Cancel">取消</string>
+    <string name="Input_SecurityNumber">输入安全密码</string>
+    <string name="Set_PassWord">设置密码</string>
+    <string name="Title">标题</string>
 </resources>

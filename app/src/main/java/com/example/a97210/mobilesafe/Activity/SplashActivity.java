@@ -22,6 +22,10 @@ import com.example.a97210.mobilesafe.Utils.ConstantValue;
 import com.example.a97210.mobilesafe.Utils.SharePreferenceUtil;
 import com.example.a97210.mobilesafe.Utils.VersonUtil;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 
 /**
@@ -45,6 +49,7 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.activity_splash);
         mContext = this;
         initUI();
+        initDB();
         initAnimation();
         //判断自动更新功能是否打开
         if (SharePreferenceUtil.getBoolean(mContext, ConstantValue.AUTOUPDATASTATUS,false)) {
@@ -63,6 +68,44 @@ public class SplashActivity extends Activity {
                     enterHome();
                 }
             }).start();
+        }
+    }
+
+    private void initDB() {
+        initAddressDB("address.db");
+    }
+
+    private void initAddressDB(String dbName) {
+        File filesDir = getFilesDir();
+        File file = new File(filesDir,dbName);
+        //如果数据库文件已近存在
+        if (file.exists()) {
+            return;
+        }
+        InputStream is = null;
+        FileOutputStream fos = null;
+        try {
+            is = getAssets().open(dbName);
+            fos = new FileOutputStream(file);
+            byte[] bytes = new byte[1024];
+            int temp = -1;
+            while ((temp = is.read(bytes)) != -1) {
+                fos.write(bytes,0,temp);
+            }
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        } finally {
+            //如果没有异常 则关闭流
+            if (is != null &&fos != null) {
+                try {
+
+                    is.close();
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

@@ -4,13 +4,13 @@
     android:layout_height="match_parent">
     <TextView
         style="@style/TextTitle"
-        android:text="设置密码"
+        android:text="@string/Set_PassWord"
         android:background="#12c1fb"/>
     <EditText
         android:inputType="textPassword"
         android:maxLength="15"
         android:id="@+id/et_set_psw"
-        android:hint="设置密码"
+        android:hint="@string/Set_PassWord"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <EditText
@@ -25,13 +25,13 @@
         android:layout_height="wrap_content">
         <Button
             android:id="@+id/bt_submit"
-            android:text="确认"
+            android:text="@string/Submit"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content" />
         <Button
             android:id="@+id/bt_cancel"
-            android:text="取消"
+            android:text="@string/Cancel"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content" />

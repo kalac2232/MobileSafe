@@ -15,6 +15,7 @@ import com.example.a97210.mobilesafe.Utils.ConstantValue;
 import com.example.a97210.mobilesafe.Utils.SharePreferenceUtil;
 
 /**
+ *
  * Created by 97210 on 2018/2/4.
  */
 public class Setup3Activity extends Activity{
@@ -62,6 +63,7 @@ public class Setup3Activity extends Activity{
         Intent intent = new Intent(mContext, Setup2Activity.class);
         startActivity(intent);
         finish();
+        overridePendingTransition(R.anim.pre_in_anim,R.anim.pre_out_anim);
     }
     public void nextPage(View view) {
         //如果输入框不为空，才让跳转至下个界面
@@ -75,6 +77,7 @@ public class Setup3Activity extends Activity{
         } else {
             Toast.makeText(mContext,"请输入安全号码",Toast.LENGTH_LONG).show();
         }
-
+        //开启平移动画
+        overridePendingTransition(R.anim.next_in_anim,R.anim.next_out_anim);
     }
 }

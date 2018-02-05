@@ -71,11 +71,14 @@ public class HomeActivity extends Activity{
                     case 6:
                         break;
                     case 7:
+                        //跳转到工具页
+                        Intent intent7 = new Intent(mContext, ToolsActivity.class);
+                        startActivity(intent7);
                         break;
                     case 8:
                         //跳转到设置页面
-                        Intent intent = new Intent(mContext, SettingActivity.class);
-                        startActivity(intent);
+                        Intent intent8 = new Intent(mContext, SettingActivity.class);
+                        startActivity(intent8);
                         break;
                 }
             }

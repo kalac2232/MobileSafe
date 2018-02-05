@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.telecom.TelecomManager;
+
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,6 +17,7 @@ import com.example.a97210.mobilesafe.Utils.SharePreferenceUtil;
 import com.example.a97210.mobilesafe.View.SettingItemView;
 
 /**
+ *
  * Created by 97210 on 2018/2/4.
  */
 public class Setup2Activity extends Activity{
@@ -70,6 +71,8 @@ public class Setup2Activity extends Activity{
         Intent intent = new Intent(mContext, Setup1Activity.class);
         startActivity(intent);
         finish();
+        //开启平移动画
+        overridePendingTransition(R.anim.pre_in_anim,R.anim.pre_out_anim);
     }
     public void nextPage(View view) {
         if (siv_sim_bound.isCheck()) {
@@ -79,5 +82,7 @@ public class Setup2Activity extends Activity{
         } else {
             Toast.makeText(mContext,"SIM未绑定，请先绑定",Toast.LENGTH_LONG).show();
         }
+        //开启平移动画
+        overridePendingTransition(R.anim.next_in_anim,R.anim.next_out_anim);
     }
 }

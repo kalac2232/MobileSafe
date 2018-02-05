@@ -5,7 +5,7 @@
     android:orientation="vertical" >
     <TextView
         style="@style/TextTitle"
-        android:text="4,恭喜您,设置完成"/>
+        android:text="@string/_4_Set_Over"/>
     <CheckBox
         android:id="@+id/cb_box"
         android:text="您没有开启防盗保护"

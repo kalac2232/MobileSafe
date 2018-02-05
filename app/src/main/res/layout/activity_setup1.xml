@@ -5,7 +5,7 @@
     android:orientation="vertical" >
     <TextView
         style="@style/TextTitle"
-        android:text="1,欢迎使用手机防盗"/>
+        android:text="@string/_1_Welcome"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -77,6 +77,7 @@
             android:layout_height="wrap_content"/>
         <!-- 图片选择器,在选中和未选中的过程中,切换展示图片 -->
         <Button
+            android:id="@+id/bt_next"
             style="@style/nextBtn"/>
     </RelativeLayout>
 </LinearLayout>

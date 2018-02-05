@@ -1,15 +1,16 @@
 package com.example.a97210.mobilesafe.Activity;
 
 import android.app.Activity;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import com.example.a97210.mobilesafe.R;
+import com.example.a97210.mobilesafe.Receiver.MyDeviceAdminReceiver;
 import com.example.a97210.mobilesafe.Utils.ConstantValue;
 import com.example.a97210.mobilesafe.Utils.SharePreferenceUtil;
 
@@ -20,7 +21,7 @@ import com.example.a97210.mobilesafe.Utils.SharePreferenceUtil;
 public class Setup4Activity extends Activity{
     private Context mContext;
     private CheckBox cb_box;
-
+    private ComponentName mDeviceAdminSample;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,8 @@ public class Setup4Activity extends Activity{
     }
 
     private void init() {
+        //组件对象可以作为是否激活的判断标志
+        mDeviceAdminSample = new ComponentName(this, MyDeviceAdminReceiver.class);
         cb_box = (CheckBox) findViewById(R.id.cb_box);
         boolean status = SharePreferenceUtil.getBoolean(mContext, ConstantValue.SECURITYSTATUS, false);
         //设置CheckBox的状态
@@ -45,6 +48,10 @@ public class Setup4Activity extends Activity{
 
                 if (cb_box.isChecked()) {
                     cb_box.setText("已开启防盗功能");
+                    Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+                    intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mDeviceAdminSample);
+                    intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,"设备管理器");
+                    startActivity(intent);
                 } else {
                     cb_box.setText("尚未开启防盗功能");
                 }
@@ -60,16 +67,15 @@ public class Setup4Activity extends Activity{
         Intent intent = new Intent(mContext, Setup3Activity.class);
         startActivity(intent);
         finish();
+        overridePendingTransition(R.anim.pre_in_anim,R.anim.pre_out_anim);
     }
     public void nextPage(View view) {
 
-        if(cb_box.isChecked()) {
-            Intent intent = new Intent(mContext, SetupOverActivity.class);
-            startActivity(intent);
-            finish();
-        }
-        else {
-            Toast.makeText(mContext,"未开启防盗模式",Toast.LENGTH_LONG).show();
-        }
+
+        Intent intent = new Intent(mContext, SetupOverActivity.class);
+        startActivity(intent);
+        finish();
+        //开启平移动画
+        overridePendingTransition(R.anim.next_in_anim,R.anim.next_out_anim);
     }
 }

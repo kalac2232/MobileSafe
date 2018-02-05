@@ -15,13 +15,13 @@
         android:text="sim变更后\n就会发送报警短信至安全号码"/>
     <EditText
         android:id="@+id/et_phone_number"
-        android:hint="请输入电话号码"
+        android:hint="@string/Input_PhoneNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <Button
         android:id="@+id/bt_select_number"
 
-        android:text="选择联系人"
+        android:text="@string/Choose_Contact"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
