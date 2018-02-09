@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 /**
- *
+ *设备管理器
  * Created by 97210 on 2018/2/5.
  */
 

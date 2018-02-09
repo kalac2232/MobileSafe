@@ -59,6 +59,8 @@ public class HomeActivity extends Activity{
                         showDialog();
                         break;
                     case 1:
+                        //跳转到黑名单页
+                        startActivity(new Intent(mContext,BlackNumberActivity.class));
                         break;
                     case 2:
                         break;
@@ -72,13 +74,12 @@ public class HomeActivity extends Activity{
                         break;
                     case 7:
                         //跳转到工具页
-                        Intent intent7 = new Intent(mContext, ToolsActivity.class);
-                        startActivity(intent7);
+                        startActivity(new Intent(mContext,ToolsActivity.class));
+
                         break;
                     case 8:
                         //跳转到设置页面
-                        Intent intent8 = new Intent(mContext, SettingActivity.class);
-                        startActivity(intent8);
+                        startActivity(new Intent(mContext,SettingActivity.class));
                         break;
                 }
             }

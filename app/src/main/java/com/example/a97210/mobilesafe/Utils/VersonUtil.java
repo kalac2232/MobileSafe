@@ -103,19 +103,55 @@ public class VersonUtil {
                         showUpdateDialog();
                         break;
                     case NORMAL:
-                        //无需更新 进入主程序
+                        //无需更新
+                        //如果当前页面为SplashActivity则进行跳转
+                        if (context instanceof SplashActivity) {
+
+                            Activity activity = (Activity) context;
+                            Intent intent = new Intent(activity, HomeActivity.class);
+                            context.startActivity(intent);
+                            //开启主界面后 结束导航界面
+                            activity.finish();
+                        }
                         break;
                     case URL_ERROR:
                         Toast.makeText(context,"URL异常",Toast.LENGTH_LONG).show();
+                        //如果当前页面为SplashActivity则进行跳转
+                        if (context instanceof SplashActivity) {
+
+                            Activity activity = (Activity) context;
+                            Intent intent = new Intent(activity, HomeActivity.class);
+                            context.startActivity(intent);
+                            //开启主界面后 结束导航界面
+                            activity.finish();
+                        }
                         break;
                     case IO_ERROR:
                         Toast.makeText(context,"与服务器连接失败",Toast.LENGTH_LONG).show();
+                        //如果当前页面为SplashActivity则进行跳转
+                        if (context instanceof SplashActivity) {
+
+                            Activity activity = (Activity) context;
+                            Intent intent = new Intent(activity, HomeActivity.class);
+                            context.startActivity(intent);
+                            //开启主界面后 结束导航界面
+                            activity.finish();
+                        }
                         break;
                     case JSON_ERROR:
                         Toast.makeText(context,"JSON解析异常",Toast.LENGTH_LONG).show();
+                        //如果当前页面为SplashActivity则进行跳转
+                        if (context instanceof SplashActivity) {
 
+                            Activity activity = (Activity) context;
+                            Intent intent = new Intent(activity, HomeActivity.class);
+                            context.startActivity(intent);
+                            //开启主界面后 结束导航界面
+                            activity.finish();
+                        }
                         break;
                 }
+
             }
         };
         //因为请求网络为耗时操作，所以要放在子线程中

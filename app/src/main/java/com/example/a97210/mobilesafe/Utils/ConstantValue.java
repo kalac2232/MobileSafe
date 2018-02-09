@@ -20,4 +20,5 @@ public class ConstantValue {
      * 防盗总开关
      */
     public static final String SECURITYSTATUS = "checkboxstatus";
+    public static final String ADDRESSSTATUS = "addressstatus";
 }
