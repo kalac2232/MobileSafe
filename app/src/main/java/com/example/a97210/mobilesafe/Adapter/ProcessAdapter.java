@@ -2,7 +2,6 @@ package com.example.a97210.mobilesafe.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.text.Layout;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +29,7 @@ public class ProcessAdapter extends BaseAdapter {
     public ProcessAdapter(Context context, List<ProcessInfo> processInfo) {
         mContext = context;
         this.processInfo = processInfo;
+        Log.i(TAG, "ProcessAdapter: 构造方法执行了");
     }
     @Override
     public int getCount() {
@@ -49,7 +49,7 @@ public class ProcessAdapter extends BaseAdapter {
         else
             return 0;
     }
-
+    //获取list View中样式的种类
     @Override
     public int getViewTypeCount() {
         return 2;
@@ -62,8 +62,8 @@ public class ProcessAdapter extends BaseAdapter {
     @Override
     public View getView(int position , View convertView, ViewGroup parent) {
 
-        ViewHolder1 viewHolder1 = null;
-        ViewHolder2 viewHolder2 = null;
+        ViewHolder_Des viewHolder_des = null;
+        ViewHolder_Title viewHolder_title = null;
 
         int type = getItemViewType(position);
 
@@ -71,34 +71,37 @@ public class ProcessAdapter extends BaseAdapter {
             //type 1为标题 0为内容
             switch (type) {
                 case 1:
-                    viewHolder2 = (ViewHolder2)convertView.getTag();
+                    viewHolder_title = (ViewHolder_Title)convertView.getTag();
                     break;
                 case 0:
-                    viewHolder1 = (ViewHolder1)convertView.getTag();
+                    viewHolder_des = (ViewHolder_Des)convertView.getTag();
+                    viewHolder_des.cb_box.setChecked(processInfo.get(position).isCheck);
                     break;
             }
 
         } else {
+            //判断类型
             switch (type) {
                 case 1:
-                    viewHolder2 = new ViewHolder2();
-                    viewHolder2.textView = new TextView(mContext);
-                    viewHolder2.textView.setWidth(30);
-                    viewHolder2.textView.setTextSize(18);
-                    viewHolder2.textView.setTextColor(Color.BLACK);
-                    viewHolder2.textView.setFocusable(true);
-                    convertView = viewHolder2.textView;
-                    convertView.setTag(viewHolder2);
+                    viewHolder_title = new ViewHolder_Title();
+                    viewHolder_title.textView = new TextView(mContext);
+                    viewHolder_title.textView.setWidth(30);
+                    viewHolder_title.textView.setTextSize(18);
+                    viewHolder_title.textView.setTextColor(Color.BLACK);
+                    //设置为不能点击
+                    viewHolder_title.textView.setFocusable(true);
+                    convertView = viewHolder_title.textView;
+                    convertView.setTag(viewHolder_title);
                     break;
                 case 0:
                     convertView = View.inflate(mContext, R.layout.listview_process_item,null);
-                    viewHolder1 = new ViewHolder1();
-                    viewHolder1.iv_icon = (ImageView) convertView.findViewById(R.id.iv_icon);
-                    viewHolder1.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
-                    viewHolder1.tv_memory_info = (TextView) convertView.findViewById(R.id.tv_memory_info);
-                    viewHolder1.cb_box = (CheckBox) convertView.findViewById(R.id.cb_box);
+                    viewHolder_des = new ViewHolder_Des();
+                    viewHolder_des.iv_icon = (ImageView) convertView.findViewById(R.id.iv_icon);
+                    viewHolder_des.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
+                    viewHolder_des.tv_memory_info = (TextView) convertView.findViewById(R.id.tv_memory_info);
+                    viewHolder_des.cb_box = (CheckBox) convertView.findViewById(R.id.cb_box);
 
-                    convertView.setTag(viewHolder1);
+                    convertView.setTag(viewHolder_des);
                     break;
             }
 
@@ -110,34 +113,34 @@ public class ProcessAdapter extends BaseAdapter {
             case 1:
                 if(processInfo.get(position) == null  && position == 0) {
 
-                    viewHolder2.textView.setText("用户程序");
+                    viewHolder_title.textView.setText("用户程序");
 
                 } else if (processInfo.get(position) == null) {
 
-                    viewHolder2.textView.setText("系统程序");
+                    viewHolder_title.textView.setText("系统程序");
 
                 }
-                convertView = viewHolder2.textView;
+                convertView = viewHolder_title.textView;
                 break;
             case 0:
-                viewHolder1.iv_icon.setBackground(processInfo.get(position).icon);
-                viewHolder1.tv_name.setText(processInfo.get(position).name);
+                viewHolder_des.iv_icon.setBackground(processInfo.get(position).icon);
+                viewHolder_des.tv_name.setText(processInfo.get(position).name);
                 long memSize = processInfo.get(position).memSize;
                 String Size = Formatter.formatFileSize(mContext, memSize);
-                viewHolder1.tv_memory_info.setText(Size);
-
+                viewHolder_des.tv_memory_info.setText(Size);
+                viewHolder_des.cb_box.setChecked(processInfo.get(position).isCheck);
                 break;
         }
 
         return convertView;
     }
-    class ViewHolder1{
+    class ViewHolder_Des {
         ImageView iv_icon;
         TextView tv_name;
         TextView tv_memory_info;
         CheckBox cb_box ;
     }
-    class ViewHolder2{
+    class ViewHolder_Title {
         TextView textView;
     }
 }

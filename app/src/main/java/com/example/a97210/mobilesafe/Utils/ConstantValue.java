@@ -22,4 +22,5 @@ public class ConstantValue {
     public static final String SECURITYSTATUS = "checkboxstatus";
     public static final String ADDRESSSTATUS = "addressstatus";
     public static final String BLACKNUMBERSTATUS = "blacknumberstatus";
+    public static final String HAS_SHORTCUT = "has_shortcut";
 }

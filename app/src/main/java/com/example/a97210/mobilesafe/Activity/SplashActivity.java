@@ -7,6 +7,7 @@ import android.content.Context;
 
 import android.content.Intent;
 
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 
@@ -53,6 +54,8 @@ public class SplashActivity extends Activity {
         initUI();
         initDB();
         initAnimation();
+        if (SharePreferenceUtil.getBoolean(mContext,ConstantValue.HAS_SHORTCUT, true))
+        initShortCut();
         //判断自动更新功能是否打开
         if (SharePreferenceUtil.getBoolean(mContext, ConstantValue.AUTOUPDATASTATUS,false)) {
             versonUtil.checkNewVerson();
@@ -82,6 +85,28 @@ public class SplashActivity extends Activity {
             startService(intent);
         }
     }
+
+    private void initShortCut() {
+        //1,给intent维护图标,名称
+        Intent intent = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
+        //维护图标
+        intent.putExtra(Intent.EXTRA_SHORTCUT_ICON,
+                BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+        //名称
+        intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "黑马卫士");
+        //2,点击快捷方式后跳转到的activity
+        //2.1维护开启的意图对象
+        Intent shortCutIntent = new Intent("android.intent.action.HOME");
+        shortCutIntent.addCategory("android.intent.category.DEFAULT");
+
+        intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortCutIntent);
+        //3,发送广播
+        sendBroadcast(intent);
+        //4,告知sp已经生成快捷方式
+        SharePreferenceUtil.putBoolean(mContext,ConstantValue.HAS_SHORTCUT, true);
+    }
+
+
 
     private void initDB() {
         initAddressDB("address.db");

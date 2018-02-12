@@ -119,4 +119,15 @@ public class ProcessInfoProvider {
         processInfos.addAll(processInfos_sys);
         return processInfos;
     }
+
+    /**
+     * 杀死对应的进程
+     * @param context
+     * @param processInfo 杀死的对象
+     */
+    public static void killProcess(Context context,ProcessInfo processInfo) {
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        //杀死指定包名的进程
+        am.killBackgroundProcesses(processInfo.packName);
+    }
 }
