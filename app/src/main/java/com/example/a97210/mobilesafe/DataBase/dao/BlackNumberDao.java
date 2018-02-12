@@ -90,8 +90,8 @@ public class BlackNumberDao {
         while (cursor.moveToNext()) {
             BlackNumberInfo blackNumberInfo = new BlackNumberInfo();
 
-            blackNumberInfo.phone = cursor.getString(0);
-            blackNumberInfo.mode = cursor.getInt(1);
+            blackNumberInfo.phone = cursor.getString(1);
+            blackNumberInfo.mode = cursor.getInt(2);
             arrayList.add(blackNumberInfo);
 
         }
@@ -100,4 +100,57 @@ public class BlackNumberDao {
         return arrayList;
     }
 
+    /**
+     * 查询20条数据
+     * @param index
+     */
+    public ArrayList<BlackNumberInfo> find(int index) {
+        SQLiteDatabase db = blackNumberOpenHelper.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select * from blacknumber order by _id desc limit ?,20;",new String[] {index+""});
+        ArrayList<BlackNumberInfo> arrayList = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            BlackNumberInfo blackNumberInfo = new BlackNumberInfo();
+
+            blackNumberInfo.phone = cursor.getString(1);
+            blackNumberInfo.mode = cursor.getInt(2);
+            arrayList.add(blackNumberInfo);
+
+        }
+        cursor.close();
+        db.close();
+        return arrayList;
+    }
+
+    /**
+     * 查询数据库中的总条数
+     * @return 返回数据库的总条数
+     */
+    public int getCount() {
+        SQLiteDatabase db = blackNumberOpenHelper.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select count(*) from blacknumber",null);
+        int count = 0;
+        if (cursor.moveToNext()) {
+
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        db.close();
+        return count;
+    }
+
+    /**
+     * 查询传入的手机号拦截模式
+     * @param phone 要查询的手机号
+     * @return 1 短信 2 电话 3 所以 0 没查到
+     */
+    public int getMode(String phone) {
+        SQLiteDatabase db = blackNumberOpenHelper.getWritableDatabase();
+        int mode = 0;
+        Cursor cursor = db.query("blacknumber",new String[] {"mode"},"phone = ?",new String[]{phone},null,null,null);
+        if (cursor.moveToNext()) {
+            mode = cursor.getInt(0);
+        }
+        cursor.close();
+        return mode;
+    }
 }

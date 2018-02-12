@@ -36,6 +36,7 @@
         <activity android:name=".Activity.ContactListActivity"/>
         <activity android:name=".Activity.ToolsActivity"/>
         <activity android:name=".Activity.BlackNumberActivity"/>
+        <activity android:name=".Activity.ProcessMessageActivity"/>
 
         <receiver android:name=".Receiver.BootReceiver">
             <intent-filter>
@@ -59,6 +60,7 @@
         </receiver>
         <service android:name=".Service.SecurityService"/>
         <service android:name=".Service.AttributionService"/>
+        <service android:name=".Service.BlackNumberService"/>
     </application>
 
 </manifest>

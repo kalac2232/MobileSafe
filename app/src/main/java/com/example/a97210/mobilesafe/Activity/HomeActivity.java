@@ -65,8 +65,11 @@ public class HomeActivity extends Activity{
                     case 2:
                         break;
                     case 3:
+                        //跳转到进程管理
+                        startActivity(new Intent(mContext,ProcessMessageActivity.class));
                         break;
                     case 4:
+
                         break;
                     case 5:
                         break;

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.example.a97210.mobilesafe.R;
 
 import com.example.a97210.mobilesafe.Service.AttributionService;
+import com.example.a97210.mobilesafe.Service.BlackNumberService;
 import com.example.a97210.mobilesafe.Utils.ConstantValue;
 import com.example.a97210.mobilesafe.Utils.SharePreferenceUtil;
 import com.example.a97210.mobilesafe.Utils.VersonUtil;
@@ -73,6 +74,11 @@ public class SplashActivity extends Activity {
         //判断来电归属地功能是否开启
         if (SharePreferenceUtil.getBoolean(mContext, ConstantValue.ADDRESSSTATUS,false)) {
             Intent intent = new Intent(mContext,AttributionService.class);
+            startService(intent);
+        }
+        //判断拦截功能是否开启
+        if (SharePreferenceUtil.getBoolean(mContext, ConstantValue.BLACKNUMBERSTATUS,false)) {
+            Intent intent = new Intent(mContext,BlackNumberService.class);
             startService(intent);
         }
     }

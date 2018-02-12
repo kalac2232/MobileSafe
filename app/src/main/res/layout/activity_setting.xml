@@ -28,6 +28,16 @@
         mobilesafe:deson="开启"
         >
     </com.example.a97210.mobilesafe.View.SettingItemView>
+    <com.example.a97210.mobilesafe.View.SettingItemView
+        xmlns:mobilesafe="http://schemas.android.com/apk/res/com.example.a97210.mobilesafe"
+        android:id="@+id/siv_blacknumber"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        mobilesafe:title="黑名单设置"
+        mobilesafe:desoff="关闭"
+        mobilesafe:deson="开启"
+        >
+    </com.example.a97210.mobilesafe.View.SettingItemView>
     <Button
         android:id="@+id/bt_checkupdata"
         android:layout_width="match_parent"

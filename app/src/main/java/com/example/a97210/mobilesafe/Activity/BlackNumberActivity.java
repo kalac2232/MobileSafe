@@ -3,13 +3,16 @@ package com.example.a97210.mobilesafe.Activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +28,7 @@ import com.example.a97210.mobilesafe.R;
 
 import java.util.ArrayList;
 
+import java.util.List;
 import java.util.logging.LogRecord;
 
 /**
@@ -39,16 +43,23 @@ public class BlackNumberActivity extends Activity {
     private BlackNumberDao mBlackNumberDao;
     private ArrayList<BlackNumberInfo> blackNumberInfoArrayList;
     int mode = 1;
+    private MyAdapter myAdapter;
+    private boolean mIsLoad = false;
+    private int count;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             //设置数据适配器
-            myAdapter = new MyAdapter();
-            lv_blacknumber.setAdapter(myAdapter);
+            if (myAdapter == null) {
+                myAdapter = new MyAdapter();
+                lv_blacknumber.setAdapter(myAdapter);
+            }else {
+                mIsLoad = true;
+                myAdapter.notifyDataSetChanged();
+            }
         }
     };
-    private MyAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,14 +73,15 @@ public class BlackNumberActivity extends Activity {
 
     private void initData() {
         new Thread() {
-
             public void run() {
                 mBlackNumberDao = BlackNumberDao.getInstance(mContext);
-                blackNumberInfoArrayList = mBlackNumberDao.findAll();
+                blackNumberInfoArrayList = mBlackNumberDao.find(0);
+                count = mBlackNumberDao.getCount();
                 handler.sendEmptyMessage(0);
             }
         }.start();
     }
+
 
     private void init() {
         bt_add = (Button) findViewById(R.id.bt_add);
@@ -78,6 +90,41 @@ public class BlackNumberActivity extends Activity {
             @Override
             public void onClick(View v) {
                 showDialog();
+            }
+        });
+
+        //监听listview的滚动状态
+        lv_blacknumber.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                //先判断当前列表中的数据少于总条数才进行读取操作
+                if (count >= blackNumberInfoArrayList.size()) {
+                    //当列表到底，并且处于空闲状态
+                    if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
+                            && lv_blacknumber.getLastVisiblePosition()>=blackNumberInfoArrayList.size()-1
+                            && !mIsLoad) {//mIsload是一个防止加载数据过程中又发生加载数据的操作的变量
+                        new Thread() {
+                            public void run() {
+                                mIsLoad = true;
+                                mBlackNumberDao = BlackNumberDao.getInstance(mContext);
+                                //取出新添加的数据
+                                List<BlackNumberInfo> moreData = mBlackNumberDao.find(blackNumberInfoArrayList.size());
+                                //添加到listview中
+                                blackNumberInfoArrayList.addAll(moreData);
+                                //发送消息告诉handler刷新列表
+                                handler.sendEmptyMessage(0);
+                            }
+                        }.start();
+                    }
+                }
+
+
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
             }
         });
     }

@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.example.a97210.mobilesafe.R;
 import com.example.a97210.mobilesafe.Service.AttributionService;
+import com.example.a97210.mobilesafe.Service.BlackNumberService;
 import com.example.a97210.mobilesafe.Utils.ConstantValue;
 import com.example.a97210.mobilesafe.Utils.ServiceUtil;
 import com.example.a97210.mobilesafe.Utils.SharePreferenceUtil;
@@ -66,6 +67,24 @@ public class SettingActivity extends Activity{
             }
         });
 
+        //黑名单控件
+        final SettingItemView siv_blacknumber = (SettingItemView) findViewById(R.id.siv_blacknumber);
+        siv_blacknumber.setCheck(ServiceUtil.isRunning(mContext,"com.example.a97210.mobilesafe.Service.BlackNumberService"));
+        siv_blacknumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                siv_blacknumber.changeCheckBoxStatus();
+                Intent intent = new Intent(mContext,BlackNumberService.class);
+                if (siv_blacknumber.isCheck()) {
+                    //启动服务
+                    startService(intent);
+                } else {
+                    stopService(intent);
+                }
+                //保存当前状态
+                SharePreferenceUtil.putBoolean(mContext,ConstantValue.BLACKNUMBERSTATUS,siv_blacknumber.isCheck());
+            }
+        });
         //手动更新按钮
         Button bt_checkupdata = (Button) findViewById(R.id.bt_checkupdata);
         bt_checkupdata.setOnClickListener(new View.OnClickListener() {
